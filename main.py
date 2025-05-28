@@ -54,27 +54,24 @@ reg_users = {
     'mike': 'password123',
     'liz': 'pass123'
     }
-# vyzadam jmeno a heslo - lze take pomoci fce input(), pro zkraceni je tato 
-# moznost zakomentovana
-# username = input('Zadej uzivatelske jmeno: ')
-# password = input('Zadej heslo: ')
-username = 'bob'
-password = '123'
+
+username = input('Zadej uzivatelske jmeno: ')
+password = input('Zadej heslo: ')
 
 # kontroluji jestli je uzivatel registrovany
 oddelovac = '-'*60
-print(f'username:{username} \npassword:{password}')
+print(f'username:{username}', f'password:{password}', sep='\n')
 print(oddelovac)
-if username in reg_users.keys() and password in reg_users.values():
-    print(f'Welcome to the app, {username} \nWe have 3 texts to be analysed.')
+if reg_users.get(username) == password:
+    print(f'Welcome to the app, {username},', 'We have 3 texts to be analysed.', sep='\n')
 else:
-    print('Unregistered user, terminating the program')
+    exit('Unregistered user, terminating the program')
 print(oddelovac)
 
 # uzivatel si vybere mezi 3 texty ulozenymi v promenne TEXTS
 number = input('Print a number btw. 1 and 3 to select: ')
 if not number.isdigit():
-    print('Wrong input, terminating the program')
+    exit('Wrong input, terminating the program')
 else:
     if 1 <= int(number) <= 3:
         # uprava vstupnich dat, definice promennych
@@ -114,14 +111,8 @@ else:
         # analyza textu 2: sloupcovy graf s delkami slov
         print(oddelovac, 'LEN|\tOCCURENCES\t|LETTERS', oddelovac, sep='\n')
         for word in text:
-            letters = 0
             word_number += 1
-            if word:
-                for letter in word:
-                    letters += 1
-                if word_number <10:
-                    print('', word_number, f'|{'*'*letters}\t'.expandtabs(20), f'|{str(letters).rjust(0)}')
-                else:
-                    print(word_number, f'|{'*'*letters}\t'.expandtabs(20), f'|{str(letters).rjust(0)}')
+            print(str(word_number).rjust(2), f'|{'*'*len(word)}\t'.expandtabs(20), f'|{str(len(word)).rjust(0)}')
+        exit()
     else:
-        print('Wrong number, terminating the program')
+        exit('Wrong number, terminating the program')
